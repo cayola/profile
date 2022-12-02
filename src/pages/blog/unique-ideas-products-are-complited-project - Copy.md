@@ -2,11 +2,13 @@
 layout: "../../layouts/BlogPost.astro"
 title: "Unique ideas products are complited project."
 description: "Contrary to popular belief, Lorem Ipsum is not simply random text.It has roots in a piece of years old.Contrary to popular"
-pubDate: "JANUARY 28, 2021"
+pubDate: 2020-01-25
 heroImage: "/src/images/port-blog1.jpg"
 singleImage: "/src/images/port_singleblog01.jpg"
 author: "josuedjh"
 position: "right"
+tags:
+  - writing
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.

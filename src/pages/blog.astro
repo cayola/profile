@@ -11,8 +11,6 @@ const posts = (await Astro.glob("./blog/*.{md,mdx}")).sort(
     new Date(b.frontmatter.pubDate).valueOf() -
     new Date(a.frontmatter.pubDate).valueOf()
 );
-
-
 ---
 
 <html lang="en">
@@ -48,7 +46,7 @@ const posts = (await Astro.glob("./blog/*.{md,mdx}")).sort(
                     poster={post.frontmatter.heroImage}
                     description={post.frontmatter.description}
                   />
-                  <div class="col-lg-8 col-md-12 ">
+                  <div class="col-lg-8 col-md-12">
                     <NewsRightContent
                       title={post.frontmatter.title}
                       date_public={post.frontmatter.pubDate}

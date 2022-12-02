@@ -3,21 +3,35 @@
 import MainHead from "../components/MainHead.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
-import RecentNews from "../components/RecentNews.astro";
 import MyExperience from "../components/MyExperience.astro";
 import MyEducation from "../components/MyEducation.astro";
 import NewsRightContent from "../components/NewsRightContent.astro";
 import NewsVerticalContent from "../components/NewsVerticalContent.astro";
 import NewsLeftContent from "../components/NewsLeftContent.astro";
 
-const posts = (await Astro.glob("./blog/*.{md,mdx}")).sort(
-  (a, b) =>
-    new Date(b.frontmatter.pubDate).valueOf() -
-    new Date(a.frontmatter.pubDate).valueOf()
-);
+const allPosts = (await Astro.glob("./blog/*.{md,mdx}"))
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.pubDate).valueOf() -
+      new Date(a.frontmatter.pubDate).valueOf()
+  );
 
-const recentPosts = posts.slice(0, 3);
+const create_list=(lista)=>{
+    const newlista=[]
+    let i=0
+    while (i<lista.length){
+        let ob={
+            'vertical': lista[i],
+            'right'   :     lista[i+1],
+            'left'    : lista[i+2]
+        }
+        newlista.push(ob)
+        i=i+3
+    }
+    return newlista
+}
 
+const es_impar=(id)=>{ return id%2==0 }
 ---
 
 <html lang="en">
@@ -29,13 +43,9 @@ const recentPosts = posts.slice(0, 3);
   </head>
   <body>
     <Nav />
-    <header class="hero">
-
-	</header>
+    <header class="hero"></header>
     <main class="wrapper">
-      <div class="home-pages">
-          
-      </div>
+      <div class="home-pages"></div>
       <div class="port_education_setions prt_toppadder80 prt_bottompadder80">
         <MyEducation />
       </div>
@@ -45,22 +55,93 @@ const recentPosts = posts.slice(0, 3);
       </div>
 
       <div class="port_blog_setions prt_toppadder80 prt_bottompadder50">
-        {
-          recentPosts.map((post) => (
-            <>
-              <NewsVerticalContent
-                title={post.frontmatter.title}
-                date_public={post.frontmatter.pubDate}
-                url_post={post.url}
-                author={post.frontmatter.author}
-                poster={post.frontmatter.heroImage}
-                description={post.frontmatter.description}
-              />
-            </>
-          ))
-        }
+        <div class="blog_section">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div
+                  class="port_heading_wrapper text-center prt_bottompadder40"
+                >
+                  <div class="port_sub_heading_wrapper">
+                    <h2 class="port_sub_heading">My Blog</h2>
+                  </div>
+                  <h1 class="port_heading">Recent News</h1>
+                </div>
+              </div>
+              {
+                create_list(allPosts).map((post,key)=>{
+                if (es_impar(key)){
+                return (<div class="row">
+                    <div class="col-md-12 col-lg-4">
+			            <NewsVerticalContent
+                            title={post.vertical.frontmatter.title}
+                            date_public={post.vertical.frontmatter.pubDate}
+                            url_post={post.vertical.url}
+                            author={post.vertical.frontmatter.author}
+                            poster={post.vertical.frontmatter.heroImage}
+                            description={post.vertical.frontmatter.description}
+                          />
+                    </div>
+			            <div class="col-md-8">
+                          <NewsLeftContent
+                            title={post.left.frontmatter.title}
+                            date_public={post.left.frontmatter.pubDate}
+                            url_post={post.left.url}
+                            author={post.left.frontmatter.author}
+                            poster={post.left.frontmatter.heroImage}
+                            description={post.left.frontmatter.description}
+                          />
+                          <NewsRightContent
+                            title={post.right.frontmatter.title}
+                            date_public={post.right.frontmatter.pubDate}
+                            url_post={post.right.url}
+                            author={post.right.frontmatter.author}
+                            poster={post.right.frontmatter.heroImage}
+                            description={post.right.frontmatter.description}
+                          />
+                        </div>
+		    </div>)
+                }else{
+                    return (<div class="row">
+		    </div>
+			            <div class="col-md-8">
+                          <NewsLeftContent
+                            title={post.left.frontmatter.title}
+                            date_public={post.left.frontmatter.pubDate}
+                            url_post={post.left.url}
+                            author={post.left.frontmatter.author}
+                            poster={post.left.frontmatter.heroImage}
+                            description={post.left.frontmatter.description}
+                          />
+                          <NewsRightContent
+                            title={post.right.frontmatter.title}
+                            date_public={post.right.frontmatter.pubDate}
+                            url_post={post.right.url}
+                            author={post.right.frontmatter.author}
+                            poster={post.right.frontmatter.heroImage}
+                            description={post.right.frontmatter.description}
+                          />
+                        </div>
+                    <div class="col-md-12 col-lg-4">
+			            <NewsVerticalContent
+                            title={post.vertical.frontmatter.title}
+                            date_public={post.vertical.frontmatter.pubDate}
+                            url_post={post.vertical.url}
+                            author={post.vertical.frontmatter.author}
+                            poster={post.vertical.frontmatter.heroImage}
+                            description={post.vertical.frontmatter.description}
+                          />
+
+		    </div>)
+
+                   }
+                })
+              }
+            </div>
+          </div>
+        </div>
       </div>
+      <Footer />
     </main>
-    <Footer />
   </body>
 </html>
