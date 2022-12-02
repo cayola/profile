@@ -1,0 +1,78 @@
+---
+import MainHead from "../components/MainHead.astro";
+import Footer from "../components/Footer.astro";
+import Nav from "../components/Nav.astro";
+import NewsVerticalContent from "../components/NewsVerticalContent.astro";
+import NewsRightContent from "../components/NewsRightContent.astro";
+import NewsLeftContent from "../components/NewsLeftContent.astro";
+
+const posts = (await Astro.glob("./blog/*.{md,mdx}")).sort(
+  (a, b) =>
+    new Date(b.frontmatter.pubDate).valueOf() -
+    new Date(a.frontmatter.pubDate).valueOf()
+);
+
+
+---
+
+<html lang="en">
+  <head>
+    <MainHead
+      title="About | Jeanine White"
+      description="About Jeanine White Lorem Ipsum"
+    />
+  </head>
+  <body>
+    <Nav />
+    <div class="port_blog_setions prt_toppadder80 prt_bottompadder50">
+      <div class="blog_section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="port_heading_wrapper text-center prt_bottompadder40">
+                <div class="port_sub_heading_wrapper">
+                  <h2 class="port_sub_heading">My Blog</h2>
+                </div>
+                <h1 class="port_heading">Recent News</h1>
+              </div>
+            </div>
+
+            {
+              posts.map((post) => (
+                <>
+                  <NewsVerticalContent
+                    title={post.frontmatter.title}
+                    date_public={post.frontmatter.pubDate}
+                    url_post={post.url}
+                    author={post.frontmatter.author}
+                    poster={post.frontmatter.heroImage}
+                    description={post.frontmatter.description}
+                  />
+                  <div class="col-lg-8 col-md-12 ">
+                    <NewsRightContent
+                      title={post.frontmatter.title}
+                      date_public={post.frontmatter.pubDate}
+                      url_post={post.url}
+                      author={post.frontmatter.author}
+                      poster={post.frontmatter.heroImage}
+                      description={post.frontmatter.description}
+                    />
+                    <NewsLeftContent
+                      title={post.frontmatter.title}
+                      date_public={post.frontmatter.pubDate}
+                      url_post={post.url}
+                      author={post.frontmatter.author}
+                      poster={post.frontmatter.heroImage}
+                      description={post.frontmatter.description}
+                    />
+                  </div>
+                </>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <Footer />
+  </body>
+</html>

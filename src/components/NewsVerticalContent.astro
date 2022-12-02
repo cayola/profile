@@ -1,0 +1,28 @@
+---
+const { date_public, title, url_post, author, poster, description } = Astro.props;
+---
+
+<!-- Component Template (HTML + JS Expressions) -->
+<div class="col-md-12 col-lg-4">
+    <div class="port_blog_mainbox vertical_content">
+        <div class="port_blog_imgbox">
+            <img src={poster} alt="blog-image" class="img-fluid">
+        </div>
+        <div class="port_blog_contentbox">
+            <span class="date_span">{date_public}</span>
+            <h4 class="blog_heading">
+                <a href={url_post}>{title}</a>
+            </h4>
+            <div class="blog_info">
+                <ul>
+                    <li><i class="fas fa-user-edit"></i><a href="#">By {author}</a> </li>
+                    <li><i class="far fa-comments"></i><a href="#">50</a></li>
+                </ul>
+            </div>
+            <p>{description}</p>
+            <div class="blog_readmore">
+                <a href={url_post} class="readmore_btn">Read More <i class="fas fa-long-arrow-alt-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

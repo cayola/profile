@@ -1,0 +1,66 @@
+---
+// Component Imports
+import MainHead from "../components/MainHead.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import RecentNews from "../components/RecentNews.astro";
+import MyExperience from "../components/MyExperience.astro";
+import MyEducation from "../components/MyEducation.astro";
+import NewsRightContent from "../components/NewsRightContent.astro";
+import NewsVerticalContent from "../components/NewsVerticalContent.astro";
+import NewsLeftContent from "../components/NewsLeftContent.astro";
+
+const posts = (await Astro.glob("./blog/*.{md,mdx}")).sort(
+  (a, b) =>
+    new Date(b.frontmatter.pubDate).valueOf() -
+    new Date(a.frontmatter.pubDate).valueOf()
+);
+
+const recentPosts = posts.slice(0, 3);
+
+---
+
+<html lang="en">
+  <head>
+    <MainHead
+      title="Jeanine White: Personal Site"
+      description="Jeanine White: Developer, Speaker, and Writer..."
+    />
+  </head>
+  <body>
+    <Nav />
+    <header class="hero">
+
+	</header>
+    <main class="wrapper">
+      <div class="home-pages">
+          
+      </div>
+      <div class="port_education_setions prt_toppadder80 prt_bottompadder80">
+        <MyEducation />
+      </div>
+
+      <div class="port_experience_setions prt_toppadder80">
+        <MyExperience />
+      </div>
+
+      <div class="port_blog_setions prt_toppadder80 prt_bottompadder50">
+        {
+          recentPosts.map((post) => (
+            <>
+              <NewsVerticalContent
+                title={post.frontmatter.title}
+                date_public={post.frontmatter.pubDate}
+                url_post={post.url}
+                author={post.frontmatter.author}
+                poster={post.frontmatter.heroImage}
+                description={post.frontmatter.description}
+              />
+            </>
+          ))
+        }
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>
