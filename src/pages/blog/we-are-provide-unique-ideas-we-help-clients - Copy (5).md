@@ -7,6 +7,9 @@ heroImage: "/src/images/port-blog3.jpg"
 singleImage: "/src/images/port_singleblog01.jpg"
 author: "josuedjh"
 position: "vertical"
+category:
+  - docker
+  - php
 tags:
   - writing
 ---

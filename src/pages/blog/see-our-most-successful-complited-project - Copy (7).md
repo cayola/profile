@@ -7,7 +7,7 @@ heroImage: "/src/images/port-blog2.jpg"
 singleImage: "/src/images/port_singleblog01.jpg"
 author: "josuedjh"
 position: "left"
-category:
+categories:
   - docker
   - python
 tags:

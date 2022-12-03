@@ -9,7 +9,7 @@ author: "josuedjh"
 position: "left"
 category:
   - docker
-  - python
+  - build
 tags:
   - writing
 ---

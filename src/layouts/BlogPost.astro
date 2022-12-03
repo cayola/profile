@@ -11,27 +11,41 @@ export interface Props {
     pubDate?: string;
     author?: string;
     singleImage?: string;
+    tags?: string;
   };
 }
 
 const {
-  content: { title, description, pubDate, author, singleImage },
+  content: { title, description, pubDate, author, singleImage, tags },
 } = Astro.props;
 
-const dateFormant = (date: string) => {
-  return new Date(date).toDateString();
-};
+function dateFormant(date: string) {
+  return new Date(date).toUTCString().replace(/(\d\d\d\d) .*/, "$1"); // remove everything after YYYY
+}
 
-const allPosts = (await Astro.glob("../pages/blog/*.{md,mdx}"))
-  .sort(
-    (a, b) =>
-      new Date(b.frontmatter.pubDate).valueOf() -
-      new Date(a.frontmatter.pubDate).valueOf()
-  )
-  .splice(0, 6);
+const allPosts = (await Astro.glob("../pages/blog/*.{md,mdx}")).sort(
+  (a, b) =>
+    new Date(b.frontmatter.pubDate).valueOf() -
+    new Date(a.frontmatter.pubDate).valueOf()
+);
 
-const allCategory = []
+const allTags = [
+  ...new Set(
+    [].concat.apply(
+      [],
+      allPosts.map((post) => post.frontmatter.tags)
+    )
+  ),
+];
 
+const allCategory = [
+  ...new Set(
+    [].concat.apply(
+      [],
+      allPosts.map((post) => post.frontmatter.categories)
+    )
+  ),
+];
 ---
 
 <html lang="en">
@@ -57,8 +71,10 @@ const allCategory = []
                       <li>
                         <a href="#">
                           <i class="fas fa-calendar-alt"></i>
-                          {dateFormant(pubDate)}</a
-                        >
+                          <time
+                            datetime={dateFormant(pubDate)}
+                            >{dateFormant(pubDate)}</time>
+                        </a>
                       </li>
                       <li>
                         <a href="#">
@@ -78,46 +94,64 @@ const allCategory = []
                   </p>
                   <div class="blog_shareinfo">
                     <div class="blog_tag">
-                      <a href="#"> <i class="fas fa-tags"></i> education, Software, portfolio</a>
+                      <a href="#"> <i class="fas fa-tags"></i> {tags}</a>
                     </div>
                     <div class="blog_social">
                       <ul class="social_list">
                         <li>
                           <a href="#" class="siderbar_icon">
-                            <span class="first_icon"><i class="fab fa-facebook-f nav_fb"></i></span>
-                            <span class="second_icon"><i class="fab fa-facebook-f nav_fb"></i></span>
+                            <span class="first_icon"
+                              ><i class="fab fa-facebook-f nav_fb"></i>
+                            </span>
+                            <span class="second_icon"
+                              ><i class="fab fa-facebook-f nav_fb"></i>
+                            </span>
                           </a>
                         </li>
                         <li>
                           <a href="#" class="siderbar_icon">
-                            <span class="first_icon"><i class="fab fa-linkedin-in nav_in"></i></span>
-                            <span class="second_icon"><i class="fab fa-linkedin-in nav_in"></i></span>
+                            <span class="first_icon"
+                              ><i class="fab fa-linkedin-in nav_in"></i>
+                            </span>
+                            <span class="second_icon"
+                              ><i class="fab fa-linkedin-in nav_in"></i>
+                            </span>
                           </a>
                         </li>
                         <li>
                           <a href="#" class="siderbar_icon">
-                            <span class="first_icon"><i class="fab fa-whatsapp nav_whats"></i></span>
-                            <span class="second_icon"><i class="fab fa-whatsapp nav_whats"></i></span>
+                            <span class="first_icon"
+                              ><i class="fab fa-whatsapp nav_whats"></i>
+                            </span>
+                            <span class="second_icon"
+                              ><i class="fab fa-whatsapp nav_whats"></i>
+                            </span>
                           </a>
                         </li>
                         <li>
                           <a href="#" class="siderbar_icon">
-                            <span class="first_icon"><i class="fab fa-twitter nav_twit"></i></span>
-                            <span class="second_icon"><i class="fab fa-twitter nav_twit"></i></span>
+                            <span class="first_icon"
+                              ><i class="fab fa-twitter nav_twit"></i>
+                            </span>
+                            <span class="second_icon"
+                              ><i class="fab fa-twitter nav_twit"></i>
+                            </span>
                           </a>
                         </li>
                         <li>
                           <a href="#" class="siderbar_icon">
-                            <span class="first_icon"><i class="fab fa-instagram nav_insta"></i></span>
-                            <span class="second_icon"><i class="fab fa-instagram nav_insta"></i></span>
+                            <span class="first_icon"
+                              ><i class="fab fa-instagram nav_insta"></i>
+                            </span>
+                            <span class="second_icon"
+                              ><i class="fab fa-instagram nav_insta"></i>
+                            </span>
                           </a>
                         </li>
-                        
                       </ul>
                     </div>
                   </div>
                 </div>
-                
               </div>
             </div>
           </div>
@@ -128,7 +162,7 @@ const allCategory = []
                 <div class="widget_rp">
                   <ul>
                     {
-                      allPosts.map((post) => (
+                      allPosts.splice(0, 6).map((post) => (
                         <li>
                           <div class="rp_thumb">
                             <a href={post.url}>
@@ -145,7 +179,9 @@ const allCategory = []
                             </a>
                             <div>
                               <a href={post.url} class="rp_date">
-                                {dateFormant(post.frontmatter.pubDate)}
+                                <time
+                            datetime={dateFormant(post.frontmatter.pubDate)}
+                            >{dateFormant(post.frontmatter.pubDate)}</time>
                               </a>
                             </div>
                           </div>
@@ -154,6 +190,20 @@ const allCategory = []
                     }
                   </ul>
                 </div>
+              </div>
+              <div class="widget tag_widget">
+                <h4 class="widget_title">Tag</h4>
+                <ul>
+                  {
+                    allTags.map((tag) => (
+                      <li>
+                        <a href={`/tags/${tag}`} class="comment_reply">
+                          {tag}
+                        </a>
+                      </li>
+                    ))
+                  }
+                </ul>
               </div>
             </div>
           </div>

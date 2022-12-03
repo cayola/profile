@@ -1,0 +1,149 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import MainHead from "../../components/MainHead.astro";
+import Nav from "../../components/Nav.astro";
+import NewsLeftContent from "../../components/NewsLeftContent.astro";
+import NewsRightContent from "../../components/NewsRightContent.astro";
+import NewsVerticalContent from "../../components/NewsVerticalContent.astro";
+
+export async function getStaticPaths() {
+  const allPosts = await Astro.glob("../blog/*.{md,mdx}");
+  const allTags = new Set();
+  allPosts.map((post) => {
+    post.frontmatter.tags &&
+      post.frontmatter.tags.map((tag: string) =>
+        allTags.add(tag.toLowerCase())
+      );
+  });
+  return Array.from(allTags).map((tag) => {
+    const filteredPosts = allPosts.filter((post) =>
+      post.frontmatter.tags.includes(tag)
+    );
+    return {
+      params: { tag },
+      props: {
+        page: filteredPosts,
+      },
+    };
+  });
+}
+const { page } = Astro.props;
+const { tag } = Astro.params;
+let title = `Posts by Tag: ${tag}`;
+let description = `Description by Tag: ${tag}`;
+
+const createList=(lista: string | any[])=>{
+    const newlista=[]
+    let i=0
+    while (i<lista.length){
+        let ob={
+            'vertical': lista[i],
+            'right'   :     lista[i+1],
+            'left'    : lista[i+2]
+        }
+        newlista.push(ob)
+        i=i+3
+    }
+    return newlista
+}
+
+const isPart=(id: number)=>{ return id%2==0 }
+
+const dateFormant = (date: string) => {return new Date(date).toDateString();}
+---
+<html lang="en">
+  <head>
+    <MainHead title={title} description={description} />
+    <BaseHead title={title} description={description} />
+  </head>
+
+  <body>
+    <Nav />
+    <div class="port_blog_setions prt_toppadder80 prt_bottompadder50">
+      <div class="blog_section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="port_heading_wrapper text-center prt_bottompadder40">
+                <div class="port_sub_heading_wrapper">
+                  <h2 class="port_sub_heading">My Tags {tag} </h2>
+                </div>
+                <h1 class="port_heading">Recent News</h1>
+              </div>
+            </div>
+    {
+      createList(page).map((post, key)=>{
+      if (isPart(key)){
+      return (<div class="row">
+          <div class="col-md-12 col-lg-4">
+        <NewsVerticalContent
+                  title={post.vertical.frontmatter.title}
+                  date_public={dateFormant(post.left.frontmatter.pubDate)}
+                  url_post={post.vertical.url}
+                  author={post.vertical.frontmatter.author}
+                  poster={post.vertical.frontmatter.heroImage}
+                  description={post.vertical.frontmatter.description}
+                />
+          </div>
+        <div class="col-md-8">
+                <NewsLeftContent
+                  title={post.left.frontmatter.title}
+                  date_public={dateFormant(post.left.frontmatter.pubDate)}
+                  url_post={post.left.url}
+                  author={post.left.frontmatter.author}
+                  poster={post.left.frontmatter.heroImage}
+                  description={post.left.frontmatter.description}
+                />
+                <NewsRightContent
+                  title={post.right.frontmatter.title}
+                  date_public={dateFormant(post.left.frontmatter.pubDate)}
+                  url_post={post.right.url}
+                  author={post.right.frontmatter.author}
+                  poster={post.right.frontmatter.heroImage}
+                  description={post.right.frontmatter.description}
+                />
+              </div>
+</div>)
+      }else{
+          return (<div class="row">
+</div>
+        <div class="col-md-8">
+                <NewsLeftContent
+                  title={post.left.frontmatter.title}
+                  date_public={dateFormant(post.left.frontmatter.pubDate)}
+                  url_post={post.left.url}
+                  author={post.left.frontmatter.author}
+                  poster={post.left.frontmatter.heroImage}
+                  description={post.left.frontmatter.description}
+                />
+                <NewsRightContent
+                  title={post.right.frontmatter.title}
+                  date_public={dateFormant(post.left.frontmatter.pubDate)}
+                  url_post={post.right.url}
+                  author={post.right.frontmatter.author}
+                  poster={post.right.frontmatter.heroImage}
+                  description={post.right.frontmatter.description}
+                />
+              </div>
+          <div class="col-md-12 col-lg-4">
+        <NewsVerticalContent
+                  title={post.vertical.frontmatter.title}
+                  date_public={dateFormant(post.left.frontmatter.pubDate)}
+                  url_post={post.vertical.url}
+                  author={post.vertical.frontmatter.author}
+                  poster={post.vertical.frontmatter.heroImage}
+                  description={post.vertical.frontmatter.description}
+                />
+</div>)
+         }
+      })
+    }
+              </div>
+            </div>
+          </div>
+        </div>
+    <Footer />
+  </body>
+</html>
+

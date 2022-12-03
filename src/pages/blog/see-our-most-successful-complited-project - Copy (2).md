@@ -10,6 +10,8 @@ position: "vertical"
 category:
   - docker
   - python
+  - html
+  - css
 tags:
   - writing
 ---

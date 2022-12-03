@@ -1,13 +1,13 @@
 ---
 layout: "../../layouts/BlogPost.astro"
-title: "#2 See our most successful complited project"
+title: "#2 See our"
 description: "Contrary to popular belief, Lorem Ipsum is not simply random text classical"
 pubDate: 2020-01-25
 heroImage: "/src/images/port-blog2.jpg"
 singleImage: "/src/images/port_singleblog01.jpg"
 author: "josuedjh"
 position: "left"
-category:
+categories:
   - docker
   - python
 tags:
@@ -15,6 +15,11 @@ tags:
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+
+<blockquote>
+<i class="fas fa-quote-left blockquote_icon"></i>
+There are many variations of passages of Lorem Ipsum available, but an majority have suffered alteration in some form, by injected humour, they randomised words which don't look even slightly believable.
+</blockquote>
 
 Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
 
