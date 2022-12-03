@@ -6,11 +6,32 @@ import NewsVerticalContent from "../components/NewsVerticalContent.astro";
 import NewsRightContent from "../components/NewsRightContent.astro";
 import NewsLeftContent from "../components/NewsLeftContent.astro";
 
-const posts = (await Astro.glob("./blog/*.{md,mdx}")).sort(
-  (a, b) =>
-    new Date(b.frontmatter.pubDate).valueOf() -
-    new Date(a.frontmatter.pubDate).valueOf()
-);
+const allPosts = (await Astro.glob("./blog/*.{md,mdx}"))
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.pubDate).valueOf() -
+      new Date(a.frontmatter.pubDate).valueOf()
+  );
+
+const createList=(lista: string | any[])=>{
+    const newlista=[]
+    let i=0
+    while (i<lista.length){
+        let ob={
+            'vertical': lista[i],
+            'right'   :     lista[i+1],
+            'left'    : lista[i+2]
+        }
+        newlista.push(ob)
+        i=i+3
+    }
+    return newlista
+}
+
+const isPart=(id: number)=>{ return id%2==0 }
+
+const dateFormant = (date: string) => {return new Date(date).toDateString();}
+
 ---
 
 <html lang="en">
@@ -36,36 +57,71 @@ const posts = (await Astro.glob("./blog/*.{md,mdx}")).sort(
             </div>
 
             {
-              posts.map((post) => (
-                <>
-                  <NewsVerticalContent
-                    title={post.frontmatter.title}
-                    date_public={post.frontmatter.pubDate}
-                    url_post={post.url}
-                    author={post.frontmatter.author}
-                    poster={post.frontmatter.heroImage}
-                    description={post.frontmatter.description}
-                  />
-                  <div class="col-lg-8 col-md-12">
-                    <NewsRightContent
-                      title={post.frontmatter.title}
-                      date_public={post.frontmatter.pubDate}
-                      url_post={post.url}
-                      author={post.frontmatter.author}
-                      poster={post.frontmatter.heroImage}
-                      description={post.frontmatter.description}
-                    />
-                    <NewsLeftContent
-                      title={post.frontmatter.title}
-                      date_public={post.frontmatter.pubDate}
-                      url_post={post.url}
-                      author={post.frontmatter.author}
-                      poster={post.frontmatter.heroImage}
-                      description={post.frontmatter.description}
-                    />
+              createList(allPosts).map((post, key)=>{
+              if (isPart(key)){
+              return (<div class="row">
+                  <div class="col-md-12 col-lg-4">
+                <NewsVerticalContent
+                          title={post.vertical.frontmatter.title}
+                          date_public={dateFormant(post.left.frontmatter.pubDate)}
+                          url_post={post.vertical.url}
+                          author={post.vertical.frontmatter.author}
+                          poster={post.vertical.frontmatter.heroImage}
+                          description={post.vertical.frontmatter.description}
+                        />
                   </div>
-                </>
-              ))
+                <div class="col-md-8">
+                        <NewsLeftContent
+                          title={post.left.frontmatter.title}
+                          date_public={dateFormant(post.left.frontmatter.pubDate)}
+                          url_post={post.left.url}
+                          author={post.left.frontmatter.author}
+                          poster={post.left.frontmatter.heroImage}
+                          description={post.left.frontmatter.description}
+                        />
+                        <NewsRightContent
+                          title={post.right.frontmatter.title}
+                          date_public={dateFormant(post.left.frontmatter.pubDate)}
+                          url_post={post.right.url}
+                          author={post.right.frontmatter.author}
+                          poster={post.right.frontmatter.heroImage}
+                          description={post.right.frontmatter.description}
+                        />
+                      </div>
+      </div>)
+              }else{
+                  return (<div class="row">
+      </div>
+                <div class="col-md-8">
+                        <NewsLeftContent
+                          title={post.left.frontmatter.title}
+                          date_public={dateFormant(post.left.frontmatter.pubDate)}
+                          url_post={post.left.url}
+                          author={post.left.frontmatter.author}
+                          poster={post.left.frontmatter.heroImage}
+                          description={post.left.frontmatter.description}
+                        />
+                        <NewsRightContent
+                          title={post.right.frontmatter.title}
+                          date_public={dateFormant(post.left.frontmatter.pubDate)}
+                          url_post={post.right.url}
+                          author={post.right.frontmatter.author}
+                          poster={post.right.frontmatter.heroImage}
+                          description={post.right.frontmatter.description}
+                        />
+                      </div>
+                  <div class="col-md-12 col-lg-4">
+                <NewsVerticalContent
+                          title={post.vertical.frontmatter.title}
+                          date_public={dateFormant(post.left.frontmatter.pubDate)}
+                          url_post={post.vertical.url}
+                          author={post.vertical.frontmatter.author}
+                          poster={post.vertical.frontmatter.heroImage}
+                          description={post.vertical.frontmatter.description}
+                        />
+      </div>)
+                 }
+              })
             }
           </div>
         </div>

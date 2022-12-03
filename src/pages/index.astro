@@ -14,9 +14,9 @@ const allPosts = (await Astro.glob("./blog/*.{md,mdx}"))
     (a, b) =>
       new Date(b.frontmatter.pubDate).valueOf() -
       new Date(a.frontmatter.pubDate).valueOf()
-  );
+  ).splice(0 ,3);
 
-const create_list=(lista)=>{
+const createList=(lista: string | any[])=>{
     const newlista=[]
     let i=0
     while (i<lista.length){
@@ -31,7 +31,10 @@ const create_list=(lista)=>{
     return newlista
 }
 
-const es_impar=(id)=>{ return id%2==0 }
+const isPart=(id: number)=>{ return id%2==0 }
+
+const dateFormant = (date: string) => {return new Date(date).toDateString();}
+
 ---
 
 <html lang="en">
@@ -59,9 +62,7 @@ const es_impar=(id)=>{ return id%2==0 }
           <div class="container">
             <div class="row">
               <div class="col-md-12">
-                <div
-                  class="port_heading_wrapper text-center prt_bottompadder40"
-                >
+                <div class="port_heading_wrapper text-center prt_bottompadder40">
                   <div class="port_sub_heading_wrapper">
                     <h2 class="port_sub_heading">My Blog</h2>
                   </div>
@@ -69,13 +70,13 @@ const es_impar=(id)=>{ return id%2==0 }
                 </div>
               </div>
               {
-                create_list(allPosts).map((post,key)=>{
-                if (es_impar(key)){
+                createList(allPosts).map((post, key)=>{
+                if (isPart(key)){
                 return (<div class="row">
                     <div class="col-md-12 col-lg-4">
 			            <NewsVerticalContent
                             title={post.vertical.frontmatter.title}
-                            date_public={post.vertical.frontmatter.pubDate}
+                            date_public={dateFormant(post.left.frontmatter.pubDate)}
                             url_post={post.vertical.url}
                             author={post.vertical.frontmatter.author}
                             poster={post.vertical.frontmatter.heroImage}
@@ -85,7 +86,7 @@ const es_impar=(id)=>{ return id%2==0 }
 			            <div class="col-md-8">
                           <NewsLeftContent
                             title={post.left.frontmatter.title}
-                            date_public={post.left.frontmatter.pubDate}
+                            date_public={dateFormant(post.left.frontmatter.pubDate)}
                             url_post={post.left.url}
                             author={post.left.frontmatter.author}
                             poster={post.left.frontmatter.heroImage}
@@ -93,7 +94,7 @@ const es_impar=(id)=>{ return id%2==0 }
                           />
                           <NewsRightContent
                             title={post.right.frontmatter.title}
-                            date_public={post.right.frontmatter.pubDate}
+                            date_public={dateFormant(post.left.frontmatter.pubDate)}
                             url_post={post.right.url}
                             author={post.right.frontmatter.author}
                             poster={post.right.frontmatter.heroImage}
@@ -107,7 +108,7 @@ const es_impar=(id)=>{ return id%2==0 }
 			            <div class="col-md-8">
                           <NewsLeftContent
                             title={post.left.frontmatter.title}
-                            date_public={post.left.frontmatter.pubDate}
+                            date_public={dateFormant(post.left.frontmatter.pubDate)}
                             url_post={post.left.url}
                             author={post.left.frontmatter.author}
                             poster={post.left.frontmatter.heroImage}
@@ -115,7 +116,7 @@ const es_impar=(id)=>{ return id%2==0 }
                           />
                           <NewsRightContent
                             title={post.right.frontmatter.title}
-                            date_public={post.right.frontmatter.pubDate}
+                            date_public={dateFormant(post.left.frontmatter.pubDate)}
                             url_post={post.right.url}
                             author={post.right.frontmatter.author}
                             poster={post.right.frontmatter.heroImage}
@@ -125,15 +126,13 @@ const es_impar=(id)=>{ return id%2==0 }
                     <div class="col-md-12 col-lg-4">
 			            <NewsVerticalContent
                             title={post.vertical.frontmatter.title}
-                            date_public={post.vertical.frontmatter.pubDate}
+                            date_public={dateFormant(post.left.frontmatter.pubDate)}
                             url_post={post.vertical.url}
                             author={post.vertical.frontmatter.author}
                             poster={post.vertical.frontmatter.heroImage}
                             description={post.vertical.frontmatter.description}
                           />
-
 		    </div>)
-
                    }
                 })
               }
