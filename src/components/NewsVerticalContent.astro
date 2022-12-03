@@ -5,7 +5,7 @@ const { date_public, title, url_post, author, poster, description } = Astro.prop
 <!-- Component Template (HTML + JS Expressions) -->
     <div class="port_blog_mainbox vertical_content">
         <div class="port_blog_imgbox">
-            <img src={poster} alt="blog-image" class="img-fluid">
+            <img src={`/blog/${poster}`} alt="blog-image" class="img-fluid">
         </div>
         <div class="port_blog_contentbox">
             <span class="date_span">{date_public}</span>

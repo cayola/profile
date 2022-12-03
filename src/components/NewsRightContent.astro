@@ -1,6 +1,4 @@
 ---
-import portBlog3 from "../images/port-blog3.jpg";
-
 const { date_public, title, url_post, author, poster, description } = Astro.props;
 ---
 
@@ -9,7 +7,7 @@ const { date_public, title, url_post, author, poster, description } = Astro.prop
   <div class="row no-gutters">
     <div class="col-md-6 align-self-center">
       <div class="port_blog_imgbox">
-        <img src={poster} alt="blog-image" class="img-fluid" />
+        <img src={`/blog/${poster}`} alt="blog-image" class="img-fluid" />
       </div>
     </div>
     <div class="col-md-6">

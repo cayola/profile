@@ -3,8 +3,8 @@ layout: "../../layouts/BlogPost.astro"
 title: "See our most successful complited project"
 description: "Contrary to popular belief, Lorem Ipsum is not simply random text classical"
 pubDate: 2020-01-25
-heroImage: "/src/images/port-blog2.jpg"
-singleImage: "/src/images/port_singleblog01.jpg"
+heroImage: "port-blog3.jpg"
+singleImage: "port_testimonial01.jpg"
 author: "josuedjh"
 position: "left"
 category:
